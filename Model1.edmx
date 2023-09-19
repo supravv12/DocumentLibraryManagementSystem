@@ -1,0 +1,735 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DLMSDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="District">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="State_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Document">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Category_Id" Type="int" Nullable="false" />
+          <Property Name="Sub_Category_Id" Type="int" Nullable="false" />
+          <Property Name="Document_Source_Id" Type="int" Nullable="false" />
+          <Property Name="Fiscal_Year_Id" Type="int" Nullable="false" />
+          <Property Name="State_Id" Type="int" Nullable="false" />
+          <Property Name="District_Id" Type="int" Nullable="false" />
+          <Property Name="Palika_Id" Type="int" Nullable="false" />
+          <Property Name="Document_Type_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Document_File">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="File_Path" Type="varchar(max)" Nullable="false" />
+          <Property Name="DocumentID" Type="int" />
+        </EntityType>
+        <EntityType Name="Document_Source">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Document_Type">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Fiscal_Year">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Palika">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="District_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="State">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Sub_Category">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="Category_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_District_State">
+          <End Role="State" Type="Self.State" Multiplicity="1" />
+          <End Role="District" Type="Self.District" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="State">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="District">
+              <PropertyRef Name="State_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Document_Category">
+          <End Role="Category" Type="Self.Category" Multiplicity="1" />
+          <End Role="Document" Type="Self.Document" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Document">
+              <PropertyRef Name="Category_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Document_District">
+          <End Role="District" Type="Self.District" Multiplicity="1" />
+          <End Role="Document" Type="Self.Document" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="District">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Document">
+              <PropertyRef Name="District_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Document_Document_Source">
+          <End Role="Document_Source" Type="Self.Document_Source" Multiplicity="1" />
+          <End Role="Document" Type="Self.Document" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Document_Source">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Document">
+              <PropertyRef Name="Document_Source_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Document_Document_Type">
+          <End Role="Document_Type" Type="Self.Document_Type" Multiplicity="1" />
+          <End Role="Document" Type="Self.Document" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Document_Type">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Document">
+              <PropertyRef Name="Document_Type_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Document_File_Document">
+          <End Role="Document" Type="Self.Document" Multiplicity="0..1" />
+          <End Role="Document_File" Type="Self.Document_File" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Document">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Document_File">
+              <PropertyRef Name="DocumentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Document_Fiscal_Year">
+          <End Role="Fiscal_Year" Type="Self.Fiscal_Year" Multiplicity="1" />
+          <End Role="Document" Type="Self.Document" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Fiscal_Year">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Document">
+              <PropertyRef Name="Fiscal_Year_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Document_Palika">
+          <End Role="Palika" Type="Self.Palika" Multiplicity="1" />
+          <End Role="Document" Type="Self.Document" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Palika">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Document">
+              <PropertyRef Name="Palika_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Document_State">
+          <End Role="State" Type="Self.State" Multiplicity="1" />
+          <End Role="Document" Type="Self.Document" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="State">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Document">
+              <PropertyRef Name="State_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Document_Sub_Category">
+          <End Role="Sub_Category" Type="Self.Sub_Category" Multiplicity="1" />
+          <End Role="Document" Type="Self.Document" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sub_Category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Document">
+              <PropertyRef Name="Sub_Category_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Palika_District">
+          <End Role="District" Type="Self.District" Multiplicity="1" />
+          <End Role="Palika" Type="Self.Palika" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="District">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Palika">
+              <PropertyRef Name="District_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sub_Category_Category">
+          <End Role="Category" Type="Self.Category" Multiplicity="1" />
+          <End Role="Sub_Category" Type="Self.Sub_Category" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Sub_Category">
+              <PropertyRef Name="Category_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DLMSDatabaseModelStoreContainer">
+          <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="District" EntityType="Self.District" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Document" EntityType="Self.Document" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Document_File" EntityType="Self.Document_File" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Document_Source" EntityType="Self.Document_Source" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Document_Type" EntityType="Self.Document_Type" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Fiscal_Year" EntityType="Self.Fiscal_Year" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Palika" EntityType="Self.Palika" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="State" EntityType="Self.State" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sub_Category" EntityType="Self.Sub_Category" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_District_State" Association="Self.FK_District_State">
+            <End Role="State" EntitySet="State" />
+            <End Role="District" EntitySet="District" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Document_Category" Association="Self.FK_Document_Category">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Document" EntitySet="Document" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Document_District" Association="Self.FK_Document_District">
+            <End Role="District" EntitySet="District" />
+            <End Role="Document" EntitySet="Document" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Document_Document_Source" Association="Self.FK_Document_Document_Source">
+            <End Role="Document_Source" EntitySet="Document_Source" />
+            <End Role="Document" EntitySet="Document" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Document_Document_Type" Association="Self.FK_Document_Document_Type">
+            <End Role="Document_Type" EntitySet="Document_Type" />
+            <End Role="Document" EntitySet="Document" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Document_File_Document" Association="Self.FK_Document_File_Document">
+            <End Role="Document" EntitySet="Document" />
+            <End Role="Document_File" EntitySet="Document_File" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Document_Fiscal_Year" Association="Self.FK_Document_Fiscal_Year">
+            <End Role="Fiscal_Year" EntitySet="Fiscal_Year" />
+            <End Role="Document" EntitySet="Document" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Document_Palika" Association="Self.FK_Document_Palika">
+            <End Role="Palika" EntitySet="Palika" />
+            <End Role="Document" EntitySet="Document" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Document_State" Association="Self.FK_Document_State">
+            <End Role="State" EntitySet="State" />
+            <End Role="Document" EntitySet="Document" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Document_Sub_Category" Association="Self.FK_Document_Sub_Category">
+            <End Role="Sub_Category" EntitySet="Sub_Category" />
+            <End Role="Document" EntitySet="Document" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Palika_District" Association="Self.FK_Palika_District">
+            <End Role="District" EntitySet="District" />
+            <End Role="Palika" EntitySet="Palika" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sub_Category_Category" Association="Self.FK_Sub_Category_Category">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Sub_Category" EntitySet="Sub_Category" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DLMSDatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="DLMSDatabaseEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Category" EntityType="DLMSDatabaseModel.Category" />
+          <EntitySet Name="District" EntityType="DLMSDatabaseModel.District" />
+          <EntitySet Name="Document" EntityType="DLMSDatabaseModel.Document" />
+          <EntitySet Name="Document_File" EntityType="DLMSDatabaseModel.Document_File" />
+          <EntitySet Name="Document_Source" EntityType="DLMSDatabaseModel.Document_Source" />
+          <EntitySet Name="Document_Type" EntityType="DLMSDatabaseModel.Document_Type" />
+          <EntitySet Name="Fiscal_Year" EntityType="DLMSDatabaseModel.Fiscal_Year" />
+          <EntitySet Name="Palika" EntityType="DLMSDatabaseModel.Palika" />
+          <EntitySet Name="State" EntityType="DLMSDatabaseModel.State" />
+          <EntitySet Name="Sub_Category" EntityType="DLMSDatabaseModel.Sub_Category" />
+          <AssociationSet Name="FK_Document_Category" Association="DLMSDatabaseModel.FK_Document_Category">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Document" EntitySet="Document" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sub_Category_Category" Association="DLMSDatabaseModel.FK_Sub_Category_Category">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Sub_Category" EntitySet="Sub_Category" />
+          </AssociationSet>
+          <AssociationSet Name="FK_District_State" Association="DLMSDatabaseModel.FK_District_State">
+            <End Role="State" EntitySet="State" />
+            <End Role="District" EntitySet="District" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Document_District" Association="DLMSDatabaseModel.FK_Document_District">
+            <End Role="District" EntitySet="District" />
+            <End Role="Document" EntitySet="Document" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Palika_District" Association="DLMSDatabaseModel.FK_Palika_District">
+            <End Role="District" EntitySet="District" />
+            <End Role="Palika" EntitySet="Palika" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Document_Document_Source" Association="DLMSDatabaseModel.FK_Document_Document_Source">
+            <End Role="Document_Source" EntitySet="Document_Source" />
+            <End Role="Document" EntitySet="Document" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Document_Document_Type" Association="DLMSDatabaseModel.FK_Document_Document_Type">
+            <End Role="Document_Type" EntitySet="Document_Type" />
+            <End Role="Document" EntitySet="Document" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Document_File_Document" Association="DLMSDatabaseModel.FK_Document_File_Document">
+            <End Role="Document" EntitySet="Document" />
+            <End Role="Document_File" EntitySet="Document_File" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Document_Fiscal_Year" Association="DLMSDatabaseModel.FK_Document_Fiscal_Year">
+            <End Role="Fiscal_Year" EntitySet="Fiscal_Year" />
+            <End Role="Document" EntitySet="Document" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Document_Palika" Association="DLMSDatabaseModel.FK_Document_Palika">
+            <End Role="Palika" EntitySet="Palika" />
+            <End Role="Document" EntitySet="Document" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Document_State" Association="DLMSDatabaseModel.FK_Document_State">
+            <End Role="State" EntitySet="State" />
+            <End Role="Document" EntitySet="Document" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Document_Sub_Category" Association="DLMSDatabaseModel.FK_Document_Sub_Category">
+            <End Role="Sub_Category" EntitySet="Sub_Category" />
+            <End Role="Document" EntitySet="Document" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Document" Relationship="DLMSDatabaseModel.FK_Document_Category" FromRole="Category" ToRole="Document" />
+          <NavigationProperty Name="Sub_Category" Relationship="DLMSDatabaseModel.FK_Sub_Category_Category" FromRole="Category" ToRole="Sub_Category" />
+        </EntityType>
+        <EntityType Name="District">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="State_Id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="State" Relationship="DLMSDatabaseModel.FK_District_State" FromRole="District" ToRole="State" />
+          <NavigationProperty Name="Document" Relationship="DLMSDatabaseModel.FK_Document_District" FromRole="District" ToRole="Document" />
+          <NavigationProperty Name="Palika" Relationship="DLMSDatabaseModel.FK_Palika_District" FromRole="District" ToRole="Palika" />
+        </EntityType>
+        <EntityType Name="Document">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Category_Id" Type="Int32" Nullable="false" />
+          <Property Name="Sub_Category_Id" Type="Int32" Nullable="false" />
+          <Property Name="Document_Source_Id" Type="Int32" Nullable="false" />
+          <Property Name="Fiscal_Year_Id" Type="Int32" Nullable="false" />
+          <Property Name="State_Id" Type="Int32" Nullable="false" />
+          <Property Name="District_Id" Type="Int32" Nullable="false" />
+          <Property Name="Palika_Id" Type="Int32" Nullable="false" />
+          <Property Name="Document_Type_Id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Category" Relationship="DLMSDatabaseModel.FK_Document_Category" FromRole="Document" ToRole="Category" />
+          <NavigationProperty Name="District" Relationship="DLMSDatabaseModel.FK_Document_District" FromRole="Document" ToRole="District" />
+          <NavigationProperty Name="Document_Source" Relationship="DLMSDatabaseModel.FK_Document_Document_Source" FromRole="Document" ToRole="Document_Source" />
+          <NavigationProperty Name="Document_Type" Relationship="DLMSDatabaseModel.FK_Document_Document_Type" FromRole="Document" ToRole="Document_Type" />
+          <NavigationProperty Name="Document_File" Relationship="DLMSDatabaseModel.FK_Document_File_Document" FromRole="Document" ToRole="Document_File" />
+          <NavigationProperty Name="Fiscal_Year" Relationship="DLMSDatabaseModel.FK_Document_Fiscal_Year" FromRole="Document" ToRole="Fiscal_Year" />
+          <NavigationProperty Name="Palika" Relationship="DLMSDatabaseModel.FK_Document_Palika" FromRole="Document" ToRole="Palika" />
+          <NavigationProperty Name="State" Relationship="DLMSDatabaseModel.FK_Document_State" FromRole="Document" ToRole="State" />
+          <NavigationProperty Name="Sub_Category" Relationship="DLMSDatabaseModel.FK_Document_Sub_Category" FromRole="Document" ToRole="Sub_Category" />
+        </EntityType>
+        <EntityType Name="Document_File">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="File_Path" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="DocumentID" Type="Int32" />
+          <NavigationProperty Name="Document" Relationship="DLMSDatabaseModel.FK_Document_File_Document" FromRole="Document_File" ToRole="Document" />
+        </EntityType>
+        <EntityType Name="Document_Source">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Document" Relationship="DLMSDatabaseModel.FK_Document_Document_Source" FromRole="Document_Source" ToRole="Document" />
+        </EntityType>
+        <EntityType Name="Document_Type">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Document" Relationship="DLMSDatabaseModel.FK_Document_Document_Type" FromRole="Document_Type" ToRole="Document" />
+        </EntityType>
+        <EntityType Name="Fiscal_Year">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Document" Relationship="DLMSDatabaseModel.FK_Document_Fiscal_Year" FromRole="Fiscal_Year" ToRole="Document" />
+        </EntityType>
+        <EntityType Name="Palika">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="District_Id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="District" Relationship="DLMSDatabaseModel.FK_Palika_District" FromRole="Palika" ToRole="District" />
+          <NavigationProperty Name="Document" Relationship="DLMSDatabaseModel.FK_Document_Palika" FromRole="Palika" ToRole="Document" />
+        </EntityType>
+        <EntityType Name="State">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="District" Relationship="DLMSDatabaseModel.FK_District_State" FromRole="State" ToRole="District" />
+          <NavigationProperty Name="Document" Relationship="DLMSDatabaseModel.FK_Document_State" FromRole="State" ToRole="Document" />
+        </EntityType>
+        <EntityType Name="Sub_Category">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Category_Id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Category" Relationship="DLMSDatabaseModel.FK_Sub_Category_Category" FromRole="Sub_Category" ToRole="Category" />
+          <NavigationProperty Name="Document" Relationship="DLMSDatabaseModel.FK_Document_Sub_Category" FromRole="Sub_Category" ToRole="Document" />
+        </EntityType>
+        <Association Name="FK_Document_Category">
+          <End Type="DLMSDatabaseModel.Category" Role="Category" Multiplicity="1" />
+          <End Type="DLMSDatabaseModel.Document" Role="Document" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Document">
+              <PropertyRef Name="Category_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sub_Category_Category">
+          <End Type="DLMSDatabaseModel.Category" Role="Category" Multiplicity="1" />
+          <End Type="DLMSDatabaseModel.Sub_Category" Role="Sub_Category" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Sub_Category">
+              <PropertyRef Name="Category_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_District_State">
+          <End Type="DLMSDatabaseModel.State" Role="State" Multiplicity="1" />
+          <End Type="DLMSDatabaseModel.District" Role="District" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="State">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="District">
+              <PropertyRef Name="State_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Document_District">
+          <End Type="DLMSDatabaseModel.District" Role="District" Multiplicity="1" />
+          <End Type="DLMSDatabaseModel.Document" Role="Document" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="District">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Document">
+              <PropertyRef Name="District_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Palika_District">
+          <End Type="DLMSDatabaseModel.District" Role="District" Multiplicity="1" />
+          <End Type="DLMSDatabaseModel.Palika" Role="Palika" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="District">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Palika">
+              <PropertyRef Name="District_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Document_Document_Source">
+          <End Type="DLMSDatabaseModel.Document_Source" Role="Document_Source" Multiplicity="1" />
+          <End Type="DLMSDatabaseModel.Document" Role="Document" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Document_Source">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Document">
+              <PropertyRef Name="Document_Source_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Document_Document_Type">
+          <End Type="DLMSDatabaseModel.Document_Type" Role="Document_Type" Multiplicity="1" />
+          <End Type="DLMSDatabaseModel.Document" Role="Document" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Document_Type">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Document">
+              <PropertyRef Name="Document_Type_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Document_File_Document">
+          <End Type="DLMSDatabaseModel.Document" Role="Document" Multiplicity="0..1" />
+          <End Type="DLMSDatabaseModel.Document_File" Role="Document_File" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Document">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Document_File">
+              <PropertyRef Name="DocumentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Document_Fiscal_Year">
+          <End Type="DLMSDatabaseModel.Fiscal_Year" Role="Fiscal_Year" Multiplicity="1" />
+          <End Type="DLMSDatabaseModel.Document" Role="Document" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Fiscal_Year">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Document">
+              <PropertyRef Name="Fiscal_Year_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Document_Palika">
+          <End Type="DLMSDatabaseModel.Palika" Role="Palika" Multiplicity="1" />
+          <End Type="DLMSDatabaseModel.Document" Role="Document" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Palika">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Document">
+              <PropertyRef Name="Palika_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Document_State">
+          <End Type="DLMSDatabaseModel.State" Role="State" Multiplicity="1" />
+          <End Type="DLMSDatabaseModel.Document" Role="Document" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="State">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Document">
+              <PropertyRef Name="State_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Document_Sub_Category">
+          <End Type="DLMSDatabaseModel.Sub_Category" Role="Sub_Category" Multiplicity="1" />
+          <End Type="DLMSDatabaseModel.Document" Role="Document" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sub_Category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Document">
+              <PropertyRef Name="Sub_Category_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DLMSDatabaseModelStoreContainer" CdmEntityContainer="DLMSDatabaseEntities">
+          <EntitySetMapping Name="Category">
+            <EntityTypeMapping TypeName="DLMSDatabaseModel.Category">
+              <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="District">
+            <EntityTypeMapping TypeName="DLMSDatabaseModel.District">
+              <MappingFragment StoreEntitySet="District">
+                <ScalarProperty Name="State_Id" ColumnName="State_Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Document">
+            <EntityTypeMapping TypeName="DLMSDatabaseModel.Document">
+              <MappingFragment StoreEntitySet="Document">
+                <ScalarProperty Name="Document_Type_Id" ColumnName="Document_Type_Id" />
+                <ScalarProperty Name="Palika_Id" ColumnName="Palika_Id" />
+                <ScalarProperty Name="District_Id" ColumnName="District_Id" />
+                <ScalarProperty Name="State_Id" ColumnName="State_Id" />
+                <ScalarProperty Name="Fiscal_Year_Id" ColumnName="Fiscal_Year_Id" />
+                <ScalarProperty Name="Document_Source_Id" ColumnName="Document_Source_Id" />
+                <ScalarProperty Name="Sub_Category_Id" ColumnName="Sub_Category_Id" />
+                <ScalarProperty Name="Category_Id" ColumnName="Category_Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Document_File">
+            <EntityTypeMapping TypeName="DLMSDatabaseModel.Document_File">
+              <MappingFragment StoreEntitySet="Document_File">
+                <ScalarProperty Name="DocumentID" ColumnName="DocumentID" />
+                <ScalarProperty Name="File_Path" ColumnName="File_Path" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Document_Source">
+            <EntityTypeMapping TypeName="DLMSDatabaseModel.Document_Source">
+              <MappingFragment StoreEntitySet="Document_Source">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Document_Type">
+            <EntityTypeMapping TypeName="DLMSDatabaseModel.Document_Type">
+              <MappingFragment StoreEntitySet="Document_Type">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Fiscal_Year">
+            <EntityTypeMapping TypeName="DLMSDatabaseModel.Fiscal_Year">
+              <MappingFragment StoreEntitySet="Fiscal_Year">
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Palika">
+            <EntityTypeMapping TypeName="DLMSDatabaseModel.Palika">
+              <MappingFragment StoreEntitySet="Palika">
+                <ScalarProperty Name="District_Id" ColumnName="District_Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="State">
+            <EntityTypeMapping TypeName="DLMSDatabaseModel.State">
+              <MappingFragment StoreEntitySet="State">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sub_Category">
+            <EntityTypeMapping TypeName="DLMSDatabaseModel.Sub_Category">
+              <MappingFragment StoreEntitySet="Sub_Category">
+                <ScalarProperty Name="Category_Id" ColumnName="Category_Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

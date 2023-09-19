@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="40174ac9b9524582b6bb6564d444db1f" Name="Diagram1">
+        <EntityTypeShape EntityType="DLMSDatabaseModel.Category" Width="1.5" PointX="5.25" PointY="1.625" />
+        <EntityTypeShape EntityType="DLMSDatabaseModel.District" Width="1.5" PointX="3" PointY="3.75" />
+        <EntityTypeShape EntityType="DLMSDatabaseModel.Document" Width="1.5" PointX="7.5" PointY="5.25" />
+        <EntityTypeShape EntityType="DLMSDatabaseModel.Document_File" Width="1.5" PointX="9.75" PointY="6.625" />
+        <EntityTypeShape EntityType="DLMSDatabaseModel.Document_Source" Width="1.5" PointX="5.25" PointY="7" />
+        <EntityTypeShape EntityType="DLMSDatabaseModel.Document_Type" Width="1.5" PointX="5.25" PointY="14.875" />
+        <EntityTypeShape EntityType="DLMSDatabaseModel.Fiscal_Year" Width="1.5" PointX="5.25" PointY="12.25" />
+        <EntityTypeShape EntityType="DLMSDatabaseModel.Palika" Width="1.5" PointX="5.25" PointY="9.375" />
+        <EntityTypeShape EntityType="DLMSDatabaseModel.State" Width="1.5" PointX="0.75" PointY="4" />
+        <EntityTypeShape EntityType="DLMSDatabaseModel.Sub_Category" Width="1.5" PointX="5.25" PointY="4.25" />
+        <AssociationConnector Association="DLMSDatabaseModel.FK_Document_Category" />
+        <AssociationConnector Association="DLMSDatabaseModel.FK_Sub_Category_Category" />
+        <AssociationConnector Association="DLMSDatabaseModel.FK_District_State" />
+        <AssociationConnector Association="DLMSDatabaseModel.FK_Document_District" />
+        <AssociationConnector Association="DLMSDatabaseModel.FK_Palika_District" />
+        <AssociationConnector Association="DLMSDatabaseModel.FK_Document_Document_Source" />
+        <AssociationConnector Association="DLMSDatabaseModel.FK_Document_Document_Type" />
+        <AssociationConnector Association="DLMSDatabaseModel.FK_Document_File_Document" />
+        <AssociationConnector Association="DLMSDatabaseModel.FK_Document_Fiscal_Year" />
+        <AssociationConnector Association="DLMSDatabaseModel.FK_Document_Palika" />
+        <AssociationConnector Association="DLMSDatabaseModel.FK_Document_State" />
+        <AssociationConnector Association="DLMSDatabaseModel.FK_Document_Sub_Category" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

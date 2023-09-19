@@ -1,0 +1,131 @@
+﻿@model DocumentLibraryManagementSystem.Models.DashboardCountModel
+
+@{
+    ViewBag.Title = "Home Page";
+}
+<div class="row">
+    <div class="col-sm-4">
+        <div class="card">
+
+            <div class="card-inner">
+                <div class="header">
+                    <h2>Document</h2>
+                    <h3 id="Documentid"></h3>
+                </div>
+                <div class="content">
+                    <p>All the details about the Documents will be available here</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="card">
+
+            <div class="card-inner">
+                <div class="header">
+                    <h2>Category</h2>
+                    <h3 id="Categoryid"></h3>
+                </div>
+                <div class="content">
+                    <p>All the details about the Category will be available here</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="card">
+
+            <div class="card-inner">
+                <div class="header">
+                    <h3>Sub-Category</h3>
+                    <h3 id="SubCategoryid"></h3>
+                </div>
+                <div class="content">
+                    <p>All the details about the  Sub-category will be available here</p>
+                </div>
+            </div>
+        </div>
+    </div><div class="col-sm-4">
+        <div class="card">
+
+            <div class="card-inner">
+                <div class="header">
+                    <h3>Fiscal Year</h3>
+                    <h3 id="FiscalYearid"></h3>
+                </div>
+                <div class="content">
+                    <p>All the details about the Fiscal Year will be available here</p>
+                </div>
+            </div>
+        </div>
+    </div><div class="col-sm-4">
+        <div class="card">
+
+            <div class="card-inner">
+                <div class="header">
+                    <h2>Document Type</h2>
+                    <h3 id="DocumentTypeid"></h3>
+                </div>
+                <div class="content">
+                    <p>All the details about the Document Type will be available here</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="card">
+
+            <div class="card-inner">
+                <div class="header">
+                    <h2>Document Source</h2>
+                    <h3 id="DocumentSourceid"></h3>
+                </div>
+                <div class="content">
+                    <p>All the details about the Document Source will be available here</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            url:"@Url.Action("SendData","Home")",
+            method: "GET",
+            success: function (data) {
+
+
+                data = JSON.parse(data);
+
+                $("#Categoryid").text(data.CategoryCount);
+                $("#Documentid").text(data.DocumentCount);
+                $("#SubCategoryid").text(data.SubCategoryCount);
+                $("#FiscalYearid").text(data.FiscalYearCount);
+                $("#DocumentTypeid").text(data.DocumentTypeCount);
+                $("#DocumentSourceid").text(data.DocumentSourceCount);
+
+
+
+
+
+
+            },
+            error: function (err) {
+
+                console.error(err);
+
+            }
+
+        })
+    
+    })
+</script>

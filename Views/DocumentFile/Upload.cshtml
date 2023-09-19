@@ -1,0 +1,16 @@
+﻿@model DocumentLibraryManagementSystem.Models.DocumentFileModel
+
+@{
+    ViewBag.Title = "Upload";
+}
+
+<h2>Upload</h2>
+
+@using (Html.BeginForm("Upload", "DocumentFile", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.TextBoxFor(model => model.ImageFile, new { type = "file" })
+    <input type="submit" value="Upload" />
+}
+
+
+
